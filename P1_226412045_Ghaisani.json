@@ -1,0 +1,101 @@
+{
+  "name": "P1_226412045_Ghaisani",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "P1-Test",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e8be5f7e-321e-43be-bec8-96f2fd7791bf",
+      "name": "Webhook",
+      "webhookId": "d2f0e5d3-1ed4-4bea-90fb-e08e873ade5d"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7becc8c3-5a46-491e-b0ce-95a95ed8fd33",
+              "name": "Nama",
+              "value": "={{ $json.body.Nama }}",
+              "type": "string"
+            },
+            {
+              "id": "9156183b-44c7-49b1-9420-f1841b858aad",
+              "name": "Pesan",
+              "value": "={{ $json.body.Pesan }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "2be376bd-4350-4b92-8ca3-0cd7ec38f21c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "098dcf0e-9d69-4a43-a30a-1ff95f4536c5",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d61d1c81-3bb8-45b5-966c-64801cb99699",
+  "meta": {
+    "instanceId": "f10b0b6d70b2f424b55ea3dcc317d177180aefcf1bc5fac0548d86fc443db2e7"
+  },
+  "nodeGroups": [],
+  "id": "9bfxbg78lAr1MKLw",
+  "tags": []
+}
