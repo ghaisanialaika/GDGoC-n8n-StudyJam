@@ -1,0 +1,150 @@
+{
+  "name": "P2_AI Persona Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "P2-tests",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "53e9e8fa-dd59-48ad-bde0-aae93a919062",
+      "name": "Webhook",
+      "webhookId": "8b312546-c394-4e65-b5a2-b86f55a2a4c5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7becc8c3-5a46-491e-b0ce-95a95ed8fd33",
+              "name": "Nama",
+              "value": "={{ $json.body.Nama }}",
+              "type": "string"
+            },
+            {
+              "id": "9156183b-44c7-49b1-9420-f1841b858aad",
+              "name": "Prompt",
+              "value": "={{ $json.body.Hobi }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "cf345523-3e41-475e-b8a1-1bdaa0c1361f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.content.parts[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        832,
+        0
+      ],
+      "id": "6403c97b-cccd-4aba-8dac-c19ff9d6ed55",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview",
+          "cachedResultName": "Gemini 3 Flash Preview",
+          "cachedResultUrl": ""
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.Prompt }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "f8febb2f-dcdf-4e62-ba6d-b00d53c8edbf",
+      "name": "Message a model",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vdCvOFR68DQnhXbJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "55c2403a-092a-4321-a620-6ecefc7e34dd",
+  "meta": {
+    "instanceId": "f10b0b6d70b2f424b55ea3dcc317d177180aefcf1bc5fac0548d86fc443db2e7"
+  },
+  "nodeGroups": [],
+  "id": "Bf8dtTx3Zp83fW2g",
+  "tags": []
+}
